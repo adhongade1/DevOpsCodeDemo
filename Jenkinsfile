@@ -1,50 +1,36 @@
-
 pipeline{
+    agent any
     tools{
-       
         maven 'mymaven'
     }
-	agent any
-      stages{
-           stage('Checkout  code'){
-	    
-               steps{
-		 echo 'cloning the repo'
-                 git 'https://github.com/adhongade1/DevOpsClassCodes.git'
-              }
-          }
-          stage('Compile'){
-             
-              steps{
+    stages{
+        stage('Checkout  code'){
+	        steps{
+		        echo 'cloning the repo'
+                git 'https://github.com/adhongade1/DevOpsClassCodes.git'
+            }
+        }
+        stage('Compile'){
+            steps{
                   echo 'complie the code again..'
                   sh 'mvn compile'
-	      }
-          }
-          stage('CodeReview'){
-		  
-              steps{
-		    
-		  echo 'codeReview'
+            }
+        }
+        stage('CodeReview'){
+            steps{
+        		  echo 'codeReview'
                   sh 'mvn pmd:pmd'
-              }
-          }
-           stage('UnitTest'){
-		  
-              steps{
-	         
-                  sh 'mvn test'
-              }
-          
-          }
-        
-          stage('Package'){
-		  
-              steps{
-		  
-                  sh 'mvn package'
-              }
-          }
-	     
-          
-      }
+            }
+        }
+        stage('UnitTest'){
+		    steps{
+	               sh 'mvn test'
+            }
+        }
+        stage('Package'){
+		    steps{
+		            sh 'mvn package'
+            }
+        }
+	}
 }
